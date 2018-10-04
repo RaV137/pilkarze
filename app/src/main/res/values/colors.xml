@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#308989</color>
+    <color name="colorPrimaryDark">#3d7070</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="darkBackground">#494949</color>
+    <color name="textColor">#E5E5E5</color>
+
+    <color name="goalkeeper">#E2A114</color>
+    <color name="defender">#EDE353</color>
+    <color name="midfielder">#3AD82F</color>
+    <color name="forward">#0885D8</color>
+</resources>

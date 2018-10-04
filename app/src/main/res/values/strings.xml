@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Pilkarze</string>
+    <string name="ustawienia">Ustawienia</string>
+    <string name="position_column_name">Poz.</string>
+    <string name="dane_os_column_name">Dane os.</string>
+    <string name="gry_column_name">Gry</string>
+    <string name="bramki_column_name">Br.</string>
+    <string name="asysty_column_name">As.</string>
+    <string name="dodatkowe_column_name">Dod.</string>
+    <string name="statystyki">Statystyki</string>
+    <string name="reset">Resetuj listę</string>
+</resources>

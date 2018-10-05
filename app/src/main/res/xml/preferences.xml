@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/list_settings"
+        android:key="listSettings">
+        <pl.goldy.danowski.pilkarze.settings.IntEditTextPreference
+            android:key="@string/list_size_key"
+            android:summary="@string/list_size_summary"
+            android:title="@string/list_size"
+            android:numeric="integer"
+            android:inputType="number"
+            android:defaultValue="18"
+            android:maxLength="2" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/element_settings"
+        android:key="elementSettings">
+        <pl.goldy.danowski.pilkarze.settings.IntEditTextPreference
+            android:key="@string/min_games_key"
+            android:summary="@string/min_games_summary"
+            android:title="@string/min_games"
+            android:numeric="integer"
+            android:inputType="number"
+            android:defaultValue="0"
+            android:maxLength="2"/>
+        <pl.goldy.danowski.pilkarze.settings.IntEditTextPreference
+            android:key="@string/max_games_key"
+            android:summary="@string/max_games_summary"
+            android:title="@string/max_games"
+            android:numeric="integer"
+            android:inputType="number"
+            android:defaultValue="50"
+            android:maxLength="2" />
+    </PreferenceCategory>
+</PreferenceScreen>

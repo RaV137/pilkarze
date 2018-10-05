@@ -9,7 +9,7 @@ public class Goalkeeper extends Player {
         this.color = R.color.goalkeeper;
         this.additional = generateNumber(0, games);
         this.goals = 0;
-        this.assists = generateNumber(0, Math.max((int) Math.floor(games * 0.06), 1));
+        this.assists = 0;
         this.position = "BR";
     }
 

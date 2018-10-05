@@ -1,12 +1,38 @@
 <resources>
     <string name="app_name">Pilkarze</string>
+
+    <!-- Menu -->
     <string name="ustawienia">Ustawienia</string>
+    <string name="statystyki">Statystyki</string>
+    <string name="reset">Resetuj listę</string>
+
+    <!-- Nazwy kolumn -->
     <string name="position_column_name">Poz.</string>
     <string name="dane_os_column_name">Dane os.</string>
     <string name="gry_column_name">Gry</string>
     <string name="bramki_column_name">Br.</string>
     <string name="asysty_column_name">As.</string>
     <string name="dodatkowe_column_name">Dod.</string>
-    <string name="statystyki">Statystyki</string>
-    <string name="reset">Resetuj listę</string>
+
+    <!-- Ustawienia -->
+    <string name="list_settings">Ustawienia listy elementów</string>
+    <string name="element_settings">Ustawienia elementu</string>
+    <string name="list_size">Rozmiar generowanej listy</string>
+    <string name="list_size_summary">Wybierz rozmiar nowo wygenerowanej listy (od 1 do 50)</string>
+    <string name="min_games">Minimalna ilość meczy</string>
+    <string name="min_games_summary">Wybierz ilość minimalnej liczby meczów (od 0 do 99)</string>
+    <string name="max_games">Maksymalna ilość meczy</string>
+    <string name="max_games_summary">Wybierz ilość maksymalnej liczby meczów (od 0 do 99)</string>
+    <string name="list_size_key">list_size</string>
+    <string name="min_games_key">min_games</string>
+    <string name="max_games_key">max_games</string>
+
+    <!-- Minimalne i maksymalne wartości ustawień -->
+    <string name="min_list_size">1</string>
+    <string name="max_list_size">50</string>
+    <string name="min_min_games">0</string>
+    <string name="max_min_games">99</string>
+    <string name="min_max_games">0</string>
+    <string name="max_max_games">99</string>
+
 </resources>

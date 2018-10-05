@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
         <activity
             android:name=".activities.PlayersListActivity"
-            android:configChanges="orientation">
+            android:configChanges="orientation"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,8 +23,10 @@
         </activity>
         <activity
             android:name=".activities.SettingsActivity"
-            android:parentActivityName="pl.goldy.danowski.pilkarze.activities.PlayersListActivity"
-            android:configChanges="orientation"/>
+            android:configChanges="orientation"
+            android:parentActivityName=".activities.PlayersListActivity"
+            android:theme="@style/PreferencesTheme" />
+        <activity android:name=".activities.StatisticActivity"></activity>
     </application>
 
 </manifest>

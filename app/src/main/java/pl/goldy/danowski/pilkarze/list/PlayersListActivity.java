@@ -1,4 +1,4 @@
-package pl.goldy.danowski.pilkarze.activities;
+package pl.goldy.danowski.pilkarze.list;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,7 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import pl.goldy.danowski.pilkarze.R;
-import pl.goldy.danowski.pilkarze.list.PlayerListHandler;
+import pl.goldy.danowski.pilkarze.player.PlayerListHandler;
+import pl.goldy.danowski.pilkarze.settings.SettingsActivity;
+import pl.goldy.danowski.pilkarze.statisctics.StatisticActivity;
 
 public class PlayersListActivity extends AppCompatActivity {
 
@@ -20,10 +22,15 @@ public class PlayersListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_players_list);
-        PlayerListHandler.initialize();
-        PlayerListHandler.fillList(getBaseContext());
+        PlayerListHandler.initialize(getBaseContext());
 
         headView = findViewById(R.id.player_list_layout);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        PlayerListHandler.setToDefaults(headView);
         PlayerListHandler.printPlayers(headView);
     }
 
@@ -47,7 +54,7 @@ public class PlayersListActivity extends AppCompatActivity {
                 openSettings();
                 return true;
             case R.id.statistics:
-                // TODO
+                showStatistics();
                 return true;
             case R.id.reset:
                 reset();
@@ -64,6 +71,11 @@ public class PlayersListActivity extends AppCompatActivity {
 
     private void reset() {
         PlayerListHandler.reset(getBaseContext(), headView);
+    }
+
+    private void showStatistics() {
+        Intent intent = new Intent(this, StatisticActivity.class);
+        startActivity(intent);
     }
 
     public void sortByPosition(View v) {

@@ -34,5 +34,7 @@
     <string name="max_min_games">99</string>
     <string name="min_max_games">0</string>
     <string name="max_max_games">99</string>
+    <string name="settings">Ustawienia</string>
+    <string name="stats">Statystyki</string>
 
 </resources>

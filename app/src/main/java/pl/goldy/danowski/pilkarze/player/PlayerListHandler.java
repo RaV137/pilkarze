@@ -1,4 +1,4 @@
-package pl.goldy.danowski.pilkarze.list;
+package pl.goldy.danowski.pilkarze.player;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -14,13 +14,11 @@ import java.util.Map;
 import java.util.Random;
 
 import pl.goldy.danowski.pilkarze.R;
-import pl.goldy.danowski.pilkarze.adapters.PlayersAdapter;
-import pl.goldy.danowski.pilkarze.player.Defender;
-import pl.goldy.danowski.pilkarze.player.Forward;
-import pl.goldy.danowski.pilkarze.player.Goalkeeper;
-import pl.goldy.danowski.pilkarze.player.Midfielder;
-import pl.goldy.danowski.pilkarze.player.Player;
+import pl.goldy.danowski.pilkarze.list.PlayersAdapter;
 import pl.goldy.danowski.pilkarze.settings.sharedPreferences.SharedPreferencesUtils;
+import pl.goldy.danowski.pilkarze.statisctics.Stat;
+import pl.goldy.danowski.pilkarze.statisctics.StatisticsAdapter;
+import pl.goldy.danowski.pilkarze.statisctics.StatisticsNames;
 
 public class PlayerListHandler {
 
@@ -28,10 +26,17 @@ public class PlayerListHandler {
     private static ArrayList<Player> players;
     private static boolean initialized = false;
 
-    public static void initialize() {
+    public static void initialize(Context context) {
+//        if (initialized) throw new AssertionError("Class already initialized!");
+
+        if(initialized)
+            return;
+
         sortCount = new HashMap<>();
         players = new ArrayList<>();
         initialized = true;
+
+        fillList(context);
     }
 
     public static void printPlayers(View v) {
@@ -216,10 +221,109 @@ public class PlayerListHandler {
         if (!initialized) throw new AssertionError("Class not initialized!");
 
         players.clear();
+//        clearPlayers();
         fillList(context);
         printPlayers(view);
         setToDefault(view);
         sortCount.clear();
+    }
+
+    public static void showStatistics(View v) {
+        if (!initialized) throw new AssertionError("Class not initialized!");
+
+        ArrayList<Stat> statistics = getStatistics();
+
+        ListView list = v.findViewById(R.id.statistics);
+        StatisticsAdapter adapter = new StatisticsAdapter(v.getContext(), statistics);
+        list.setAdapter(adapter);
+    }
+
+    public static void setToDefaults(View v) {
+        setToDefault(v);
+        sortCount.clear();
+    }
+
+
+
+//    private static void clearPlayers() {
+//        try{
+//            for(Player p : players) {
+//                if(p instanceof Goalkeeper) {
+//                    ((Goalkeeper) p).finalize();
+//                } else if(p instanceof Defender) {
+//                    ((Defender) p).finalize();
+//                } else if(p instanceof Midfielder) {
+//                    ((Midfielder) p).finalize();
+//                } else if(p instanceof Forward) {
+//                    ((Forward) p).finalize();
+//                }
+//                players.remove(p);
+//            }
+//        } catch (Throwable t) {
+//            t.printStackTrace();
+//        }
+//    }
+
+    private static ArrayList<Stat> getStatistics() {
+        ArrayList<Stat> stats = new ArrayList<>();
+
+        stats.add(new Stat(StatisticsNames.GOALKEEPERS_COUNT.getName(), getGoalkeeperCount()));
+        stats.add(new Stat(StatisticsNames.DEFENDERS_COUNT.getName(), getDefenderCount()));
+        stats.add(new Stat(StatisticsNames.MIDFIELDERS_COUNT.getName(), getMidfielderCount()));
+        stats.add(new Stat(StatisticsNames.FORWARDS_COUNT.getName(), getForwardCount()));
+        stats.add(new Stat(StatisticsNames.TOTAL_GAMES.getName(), getTotalGames()));
+        stats.add(new Stat(StatisticsNames.TOTAL_GOALS.getName(), getTotalGoals()));
+        stats.add(new Stat(StatisticsNames.TOTAL_ASSISTS.getName(), getTotalAssists()));
+        stats.add(new Stat(StatisticsNames.GOALKEEPERS_ADDITIONAL.getName(), getGoalkeeperAdditional()));
+        stats.add(new Stat(StatisticsNames.DEFENDERS_ADDITIONAL.getName(), getDefenderAdditional()));
+        stats.add(new Stat(StatisticsNames.MIDFIELDERS_ADDITIONAL.getName(), getMidfielderAdditional()));
+        stats.add(new Stat(StatisticsNames.FORWARDS_ADDITIONAL.getName(), getForwardAdditional()));
+
+        return stats;
+    }
+
+    private static int getGoalkeeperCount() {
+        return Goalkeeper.getCount();
+    }
+
+    private static int getDefenderCount() {
+        return Defender.getCount();
+    }
+
+    private static int getMidfielderCount() {
+        return Midfielder.getCount();
+    }
+
+    private static int getForwardCount() {
+        return Forward.getCount();
+    }
+
+    private static int getTotalGames() {
+        return Player.getTotalGames();
+    }
+
+    private static int getTotalGoals() {
+        return Player.getTotalGoals();
+    }
+
+    private static int getTotalAssists() {
+        return Player.getTotalAssists();
+    }
+
+    private static int getGoalkeeperAdditional() {
+        return Goalkeeper.getTotalAdditional();
+    }
+
+    private static int getDefenderAdditional() {
+        return Defender.getTotalAdditional();
+    }
+
+    private static int getMidfielderAdditional() {
+        return Midfielder.getTotalAdditional();
+    }
+
+    private static int getForwardAdditional() {
+        return Forward.getTotalAdditional();
     }
 
     private static int generateNum(int exlBound) {

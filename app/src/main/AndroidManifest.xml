@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".activities.PlayersListActivity"
+            android:name=".list.PlayersListActivity"
             android:configChanges="orientation"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -22,11 +22,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:configChanges="orientation"
-            android:parentActivityName=".activities.PlayersListActivity"
+            android:label="@string/settings"
+            android:parentActivityName=".list.PlayersListActivity"
             android:theme="@style/PreferencesTheme" />
-        <activity android:name=".activities.StatisticActivity"></activity>
+        <activity
+            android:name=".statisctics.StatisticActivity"
+            android:configChanges="orientation"
+            android:label="@string/stats"
+            android:parentActivityName=".list.PlayersListActivity"
+            android:theme="@style/StatsTheme" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package pl.goldy.danowski.pilkarze.adapters;
+package pl.goldy.danowski.pilkarze.list;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -34,7 +34,7 @@ public class PlayersAdapter extends ArrayAdapter<Player> {
         TextView tvAssists = convertView.findViewById(R.id.assists);
         TextView tvAdditional = convertView.findViewById(R.id.additional);
 
-        assert player.getPosition() != null : "Position is null!";
+        assert player != null : "Received player is null!";
         tvPosition.setText(player.getPosition());
         tvPosition.setTextColor(ContextCompat.getColor(getContext(), player.getColor()));
         tvName.setText(player.getName());

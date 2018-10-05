@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/player_list_layout"
-    tools:context=".activities.PlayersListActivity"
+    tools:context=".list.PlayersListActivity"
     android:background="@color/darkBackground" >
 
     <LinearLayout
@@ -24,7 +24,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1.5"
             android:text="@string/position_column_name"
-            android:gravity="center_horizontal"
+            android:gravity="left"
             android:onClick="sortByPosition"
             android:textColor="@color/textColor"/>
 
@@ -37,7 +37,7 @@
             android:layout_weight="6"
             android:text="@string/dane_os_column_name"
             android:onClick="sortByName"
-            android:gravity="center_horizontal"/>
+            android:gravity="left"/>
 
         <TextView
             android:id="@+id/games"
@@ -81,7 +81,7 @@
             android:layout_weight="6"
             android:text="@string/dodatkowe_column_name"
             android:onClick="sortByAdditional"
-            android:gravity="center_horizontal"/>
+            android:gravity="left"/>
 
     </LinearLayout>
 

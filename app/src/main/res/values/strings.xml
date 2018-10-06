@@ -36,5 +36,7 @@
     <string name="max_max_games">99</string>
     <string name="settings">Ustawienia</string>
     <string name="stats">Statystyki</string>
+    <string name="duplicate">Duplikuj</string>
+    <string name="delete">Usuń</string>
 
 </resources>

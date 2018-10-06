@@ -5,10 +5,12 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 
 import pl.goldy.danowski.pilkarze.R;
 import pl.goldy.danowski.pilkarze.player.PlayerListHandler;
@@ -34,6 +36,9 @@ public class PlayersListActivity extends AppCompatActivity {
                 PlayerListHandler.addRandomPlayer(view, getBaseContext(), headView);
             }
         });
+
+        View listView = findViewById(R.id.playersList);
+        registerForContextMenu(listView);
     }
 
     @Override
@@ -47,6 +52,37 @@ public class PlayersListActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.duplicate:
+                duplicatePlayer(info.id);
+                return true;
+            case R.id.delete:
+                deletePlayer(info.id);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void duplicatePlayer(long id) {
+        PlayerListHandler.duplicatePlayer(id, getBaseContext(), headView);
+    }
+
+    private void deletePlayer(long id) {
+        PlayerListHandler.deletePlayer(id, getBaseContext(), headView);
     }
 
     @Override

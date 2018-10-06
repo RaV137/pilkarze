@@ -230,20 +230,56 @@ public class PlayerListHandler {
     }
 
     public static void addRandomPlayer(View v, Context context, View headView) {
-        int size = SharedPreferencesUtils.getIntegerPreference(context, context.getResources().getString(R.string.list_size_key), 18);
-        int maxSize = Integer.valueOf(context.getString(R.string.max_list_size));
-        if(size >= maxSize) {
-            Toast.makeText(context, "Osiągnięto już maksymalny rozmiar listy (" + maxSize + ")!", Toast.LENGTH_SHORT).show();
-        } else {
-            SharedPreferencesUtils.setIntegerPreference(context, context.getResources().getString(R.string.list_size_key), ++size);
+        if(increaseSize(context)) {
+            int from = SharedPreferencesUtils.getIntegerPreference(context, context.getResources().getString(R.string.min_games_key), 0);
+            int to = SharedPreferencesUtils.getIntegerPreference(context, context.getResources().getString(R.string.max_games_key), 50);
+            players.add(generatePlayer(from, to));
+            printPlayers(headView);
+            setToDefaults(headView);
         }
-
-        int from = SharedPreferencesUtils.getIntegerPreference(context, context.getResources().getString(R.string.min_games_key), 0);
-        int to = SharedPreferencesUtils.getIntegerPreference(context, context.getResources().getString(R.string.max_games_key), 50);
-        players.add(generatePlayer(from, to));
-        printPlayers(headView);
     }
 
+    public static void duplicatePlayer(long id, Context context, View headView) {
+        if(increaseSize(context)) {
+            Player p = players.get((int) id);
+            players. add(p);
+            printPlayers(headView);
+            setToDefaults(headView);
+        }
+    }
+
+    public static void deletePlayer(long id, Context context, View headView) {
+        if(decreaseSize(context)) {
+            players.remove((int) id);
+            printPlayers(headView);
+            setToDefaults(headView);
+        }
+    }
+
+
+    private static boolean decreaseSize(Context context) {
+        int size = SharedPreferencesUtils.getIntegerPreference(context, context.getResources().getString(R.string.list_size_key), 18);
+        int minSize = Integer.valueOf(context.getString(R.string.min_list_size));
+        if(--size < minSize) {
+            Toast.makeText(context, "Osiągnięto już minimalny rozmiar listy (" + minSize + ")!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            SharedPreferencesUtils.setIntegerPreference(context, context.getResources().getString(R.string.list_size_key), size);
+            return true;
+        }
+    }
+
+    private static boolean increaseSize(Context context) {
+        int size = SharedPreferencesUtils.getIntegerPreference(context, context.getResources().getString(R.string.list_size_key), 18);
+        int maxSize = Integer.valueOf(context.getString(R.string.max_list_size));
+        if(++size > maxSize) {
+            Toast.makeText(context, "Osiągnięto już maksymalny rozmiar listy (" + maxSize + ")!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            SharedPreferencesUtils.setIntegerPreference(context, context.getResources().getString(R.string.list_size_key), size);
+            return true;
+        }
+    }
 
     private static Player generatePlayer(int from, int to) {
         int num = generateNum(4);

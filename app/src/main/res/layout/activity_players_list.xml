@@ -1,95 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:id="@+id/player_list_layout"
     tools:context=".list.PlayersListActivity"
     android:background="@color/darkBackground" >
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/position"
-            android:layout_width="0dp"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1.5"
-            android:text="@string/position_column_name"
-            android:gravity="left"
-            android:onClick="sortByPosition"
-            android:textColor="@color/textColor"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:textColor="@color/textColor"
-            android:layout_weight="6"
-            android:text="@string/dane_os_column_name"
-            android:onClick="sortByName"
-            android:gravity="left"/>
+            <TextView
+                android:id="@+id/position"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1.5"
+                android:text="@string/position_column_name"
+                android:gravity="left"
+                android:onClick="sortByPosition"
+                android:textColor="@color/textColor"/>
 
-        <TextView
-            android:id="@+id/games"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/gry_column_name"
-            android:textColor="@color/textColor"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:onClick="sortByGames"/>
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="@color/textColor"
+                android:layout_weight="6"
+                android:text="@string/dane_os_column_name"
+                android:onClick="sortByName"
+                android:gravity="left"/>
 
-        <TextView
-            android:id="@+id/goals"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/bramki_column_name"
-            android:textColor="@color/textColor"
-            android:layout_weight="1"
-            android:onClick="sortByGoals"
-            android:gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/games"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/gry_column_name"
+                android:textColor="@color/textColor"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:onClick="sortByGames"/>
 
-        <TextView
-            android:id="@+id/assists"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/asysty_column_name"
-            android:textColor="@color/textColor"
-            android:layout_weight="1"
-            android:onClick="sortByAssists"
-            android:gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/goals"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/bramki_column_name"
+                android:textColor="@color/textColor"
+                android:layout_weight="1"
+                android:onClick="sortByGoals"
+                android:gravity="center_horizontal"/>
 
-        <TextView
-            android:id="@+id/additional"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:textColor="@color/textColor"
-            android:layout_weight="6"
-            android:text="@string/dodatkowe_column_name"
-            android:onClick="sortByAdditional"
-            android:gravity="left"/>
+            <TextView
+                android:id="@+id/assists"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/asysty_column_name"
+                android:textColor="@color/textColor"
+                android:layout_weight="1"
+                android:onClick="sortByAssists"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/additional"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="@color/textColor"
+                android:layout_weight="6"
+                android:text="@string/dodatkowe_column_name"
+                android:onClick="sortByAdditional"
+                android:gravity="left"/>
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/playersList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/playersList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addPlayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_add_white_24dp"
+        android:layout_margin="16dp"/>
 
-    </ListView>
-
-</LinearLayout>
+</RelativeLayout>

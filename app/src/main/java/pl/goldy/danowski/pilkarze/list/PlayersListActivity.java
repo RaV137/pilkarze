@@ -3,6 +3,7 @@ package pl.goldy.danowski.pilkarze.list;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,14 @@ public class PlayersListActivity extends AppCompatActivity {
         PlayerListHandler.initialize(getBaseContext());
 
         headView = findViewById(R.id.player_list_layout);
+
+        FloatingActionButton fab = findViewById(R.id.addPlayer);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PlayerListHandler.addRandomPlayer(view, getBaseContext(), headView);
+            }
+        });
     }
 
     @Override

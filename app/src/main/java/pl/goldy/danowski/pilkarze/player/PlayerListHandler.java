@@ -61,21 +61,7 @@ public class PlayerListHandler {
         }
 
         for(int i = 0; i < size; ++i) {
-            int num = generateNum(4);
-            switch(num % 4) {
-                case 0:
-                    players.add(new Goalkeeper(generateSurnameAndName(), from, to));
-                    break;
-                case 1:
-                    players.add(new Defender(generateSurnameAndName(), from, to));
-                    break;
-                case 2:
-                    players.add(new Midfielder(generateSurnameAndName(), from, to));
-                    break;
-                case 3:
-                    players.add(new Forward(generateSurnameAndName(), from, to));
-                    break;
-            }
+            players.add(generatePlayer(from, to));
         }
     }
 
@@ -243,41 +229,89 @@ public class PlayerListHandler {
         sortCount.clear();
     }
 
+    public static void addRandomPlayer(View v, Context context, View headView) {
+        int size = SharedPreferencesUtils.getIntegerPreference(context, context.getResources().getString(R.string.list_size_key), 18);
+        int maxSize = Integer.valueOf(context.getString(R.string.max_list_size));
+        if(size >= maxSize) {
+            Toast.makeText(context, "Osiągnięto już maksymalny rozmiar listy (" + maxSize + ")!", Toast.LENGTH_SHORT).show();
+        } else {
+            SharedPreferencesUtils.setIntegerPreference(context, context.getResources().getString(R.string.list_size_key), ++size);
+        }
+
+        int from = SharedPreferencesUtils.getIntegerPreference(context, context.getResources().getString(R.string.min_games_key), 0);
+        int to = SharedPreferencesUtils.getIntegerPreference(context, context.getResources().getString(R.string.max_games_key), 50);
+        players.add(generatePlayer(from, to));
+        printPlayers(headView);
+    }
 
 
-//    private static void clearPlayers() {
-//        try{
-//            for(Player p : players) {
-//                if(p instanceof Goalkeeper) {
-//                    ((Goalkeeper) p).finalize();
-//                } else if(p instanceof Defender) {
-//                    ((Defender) p).finalize();
-//                } else if(p instanceof Midfielder) {
-//                    ((Midfielder) p).finalize();
-//                } else if(p instanceof Forward) {
-//                    ((Forward) p).finalize();
-//                }
-//                players.remove(p);
-//            }
-//        } catch (Throwable t) {
-//            t.printStackTrace();
-//        }
-//    }
+    private static Player generatePlayer(int from, int to) {
+        int num = generateNum(4);
+        switch(num % 4) {
+            case 0:
+                return new Goalkeeper(generateSurnameAndName(), from, to);
+            case 1:
+                return new Defender(generateSurnameAndName(), from, to);
+            case 2:
+                return new Midfielder(generateSurnameAndName(), from, to);
+            case 3:
+                return new Forward(generateSurnameAndName(), from, to);
+        }
+        return null;
+    }
 
     private static ArrayList<Stat> getStatistics() {
         ArrayList<Stat> stats = new ArrayList<>();
 
-        stats.add(new Stat(StatisticsNames.GOALKEEPERS_COUNT.getName(), getGoalkeeperCount()));
-        stats.add(new Stat(StatisticsNames.DEFENDERS_COUNT.getName(), getDefenderCount()));
-        stats.add(new Stat(StatisticsNames.MIDFIELDERS_COUNT.getName(), getMidfielderCount()));
-        stats.add(new Stat(StatisticsNames.FORWARDS_COUNT.getName(), getForwardCount()));
-        stats.add(new Stat(StatisticsNames.TOTAL_GAMES.getName(), getTotalGames()));
-        stats.add(new Stat(StatisticsNames.TOTAL_GOALS.getName(), getTotalGoals()));
-        stats.add(new Stat(StatisticsNames.TOTAL_ASSISTS.getName(), getTotalAssists()));
-        stats.add(new Stat(StatisticsNames.GOALKEEPERS_ADDITIONAL.getName(), getGoalkeeperAdditional()));
-        stats.add(new Stat(StatisticsNames.DEFENDERS_ADDITIONAL.getName(), getDefenderAdditional()));
-        stats.add(new Stat(StatisticsNames.MIDFIELDERS_ADDITIONAL.getName(), getMidfielderAdditional()));
-        stats.add(new Stat(StatisticsNames.FORWARDS_ADDITIONAL.getName(), getForwardAdditional()));
+        int totGames = 0, totGoals = 0, totAssists = 0;
+        int gkCount = 0, defCount = 0, midCount = 0, forCount = 0;
+        int gkAdd = 0, defAdd = 0, midAdd = 0, forAdd = 0;
+        try{
+            for(Player p : players) {
+                if(p instanceof Goalkeeper) {
+                    gkAdd += p.getAdditionalValue();
+                    gkCount++;
+                } else if(p instanceof Defender) {
+                    defAdd += p.getAdditionalValue();
+                    defCount++;
+                } else if(p instanceof Midfielder) {
+                    midAdd += p.getAdditionalValue();
+                    midCount++;
+                } else if(p instanceof Forward) {
+                    forAdd += p.getAdditionalValue();
+                    forCount++;
+                }
+                totGames += p.getGames();
+                totGoals += p.getGoals();
+                totAssists += p.getAssists();
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        stats.add(new Stat(StatisticsNames.GOALKEEPERS_COUNT.getName(), gkCount));
+        stats.add(new Stat(StatisticsNames.DEFENDERS_COUNT.getName(), defCount));
+        stats.add(new Stat(StatisticsNames.MIDFIELDERS_COUNT.getName(), midCount));
+        stats.add(new Stat(StatisticsNames.FORWARDS_COUNT.getName(), forCount));
+        stats.add(new Stat(StatisticsNames.TOTAL_GAMES.getName(), totGames));
+        stats.add(new Stat(StatisticsNames.TOTAL_GOALS.getName(), totGoals));
+        stats.add(new Stat(StatisticsNames.TOTAL_ASSISTS.getName(), totAssists));
+        stats.add(new Stat(StatisticsNames.GOALKEEPERS_ADDITIONAL.getName(), gkAdd));
+        stats.add(new Stat(StatisticsNames.DEFENDERS_ADDITIONAL.getName(), defAdd));
+        stats.add(new Stat(StatisticsNames.MIDFIELDERS_ADDITIONAL.getName(), midAdd));
+        stats.add(new Stat(StatisticsNames.FORWARDS_ADDITIONAL.getName(), forAdd));
+
+//        stats.add(new Stat(StatisticsNames.GOALKEEPERS_COUNT.getName(), getGoalkeeperCount()));
+//        stats.add(new Stat(StatisticsNames.DEFENDERS_COUNT.getName(), getDefenderCount()));
+//        stats.add(new Stat(StatisticsNames.MIDFIELDERS_COUNT.getName(), getMidfielderCount()));
+//        stats.add(new Stat(StatisticsNames.FORWARDS_COUNT.getName(), getForwardCount()));
+//        stats.add(new Stat(StatisticsNames.TOTAL_GAMES.getName(), getTotalGames()));
+//        stats.add(new Stat(StatisticsNames.TOTAL_GOALS.getName(), getTotalGoals()));
+//        stats.add(new Stat(StatisticsNames.TOTAL_ASSISTS.getName(), getTotalAssists()));
+//        stats.add(new Stat(StatisticsNames.GOALKEEPERS_ADDITIONAL.getName(), getGoalkeeperAdditional()));
+//        stats.add(new Stat(StatisticsNames.DEFENDERS_ADDITIONAL.getName(), getDefenderAdditional()));
+//        stats.add(new Stat(StatisticsNames.MIDFIELDERS_ADDITIONAL.getName(), getMidfielderAdditional()));
+//        stats.add(new Stat(StatisticsNames.FORWARDS_ADDITIONAL.getName(), getForwardAdditional()));
 
         return stats;
     }
